@@ -1,0 +1,128 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #333;
+  min-height: 100vh;
+  padding: 20px 10px;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #4a4a4a;
+  font-size: 1.9rem;
+}
+
+#date {
+  font-size: 1rem;
+  color: #777;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+#taskInput {
+  flex: 1;
+  padding: 14px 16px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#taskInput:focus {
+  border-color: #667eea;
+}
+
+#addBtn {
+  padding: 0 24px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#addBtn:hover {
+  background: #5a67d8;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #f8f9fa;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  transition: all 0.2s;
+  font-size: 1.05rem;
+}
+
+li.completed {
+  background: #e6ffe6;
+  text-decoration: line-through;
+  color: #777;
+  opacity: 0.85;
+}
+
+li button {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+li button:hover {
+  background: rgba(0,0,0,0.07);
+}
+
+.delete-btn {
+  color: #e53e3e;
+  margin-left: auto;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 32px;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* 手機小螢幕優化 */
+@media (max-width: 500px) {
+  .container {
+    padding: 20px 16px;
+  }
+  h1 {
+    font-size: 1.7rem;
+  }
+}
