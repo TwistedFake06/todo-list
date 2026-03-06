@@ -5,11 +5,14 @@ dateEl.textContent = new Date().toLocaleDateString('zh-TW', {
 });
 
 // 元素
-const taskInput     = document.getElementById('taskInput');
+const taskInput      = document.getElementById('taskInput');
 const categorySelect = document.getElementById('categorySelect');
-const dueDateInput  = document.getElementById('dueDateInput');
-const addBtn        = document.getElementById('addBtn');
-const taskList      = document.getElementById('taskList');
+const dueDateInput   = document.getElementById('dueDateInput');
+const addBtn         = document.getElementById('addBtn');
+const taskList       = document.getElementById('taskList');
+const exportBtn      = document.getElementById('exportBtn');
+const importBtn      = document.getElementById('importBtn');
+const fileInput      = document.getElementById('fileInput');
 
 // 載入資料
 let tasks = JSON.parse(localStorage.getItem('todo-tasks-2025')) || [];
@@ -18,14 +21,13 @@ let tasks = JSON.parse(localStorage.getItem('todo-tasks-2025')) || [];
 function renderTasks() {
   taskList.innerHTML = '';
 
-  // 先分組：未完成 → 已完成
+  // 未完成在上，已完成在下
   const sortedTasks = [
     ...tasks.filter(t => !t.completed),
     ...tasks.filter(t => t.completed)
   ];
 
-  sortedTasks.forEach((task, index) => {
-    // 因為排序後 index 改變，所以用原始 tasks 找真正 index
+  sortedTasks.forEach((task) => {
     const realIndex = tasks.indexOf(task);
 
     const li = document.createElement('li');
@@ -43,13 +45,11 @@ function renderTasks() {
       <button class="delete-btn">×</button>
     `;
 
-    // 切換完成 → 完成後會自動移底
     li.querySelector('input').addEventListener('change', () => {
       tasks[realIndex].completed = !tasks[realIndex].completed;
       saveAndRender();
     });
 
-    // 刪除
     li.querySelector('.delete-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       if (confirm('確定刪除？')) {
@@ -64,7 +64,7 @@ function renderTasks() {
   addDragAndDropListeners();
 }
 
-// 儲存 + 重新渲染
+// 儲存 + 渲染
 function saveAndRender() {
   localStorage.setItem('todo-tasks-2025', JSON.stringify(tasks));
   renderTasks();
@@ -78,12 +78,7 @@ function addTask() {
   const category = categorySelect.value;
   const dueDate = dueDateInput.value || null;
 
-  tasks.push({
-    text,
-    category,
-    dueDate,
-    completed: false
-  });
+  tasks.push({ text, category, dueDate, completed: false });
 
   taskInput.value = '';
   dueDateInput.value = '';
@@ -91,7 +86,66 @@ function addTask() {
 }
 
 // ────────────────
-// 拖拉排序邏輯
+// 匯出功能
+// ────────────────
+exportBtn.addEventListener('click', () => {
+  if (tasks.length === 0) {
+    alert('目前沒有任務可匯出');
+    return;
+  }
+
+  const dataStr = JSON.stringify(tasks, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'my-todo-backup.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+// ────────────────
+// 匯入功能
+// ────────────────
+importBtn.addEventListener('click', () => {
+  fileInput.click();
+});
+
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    try {
+      const importedTasks = JSON.parse(event.target.result);
+      
+      // 簡單驗證：檢查是否為陣列，且每個項目有 text 屬性
+      if (!Array.isArray(importedTasks) || importedTasks.some(t => !t || typeof t.text !== 'string')) {
+        alert('檔案格式不正確，請選擇有效的備份 JSON 檔案');
+        return;
+      }
+
+      if (confirm(`即將匯入 ${importedTasks.length} 個任務，會覆蓋目前所有資料，確定繼續？`)) {
+        tasks = importedTasks;
+        saveAndRender();
+        alert('匯入成功！');
+      }
+    } catch (err) {
+      alert('無法解析檔案：' + err.message);
+    }
+  };
+  reader.readAsText(file);
+
+  // 清空 input 以便下次選擇同一檔案
+  e.target.value = '';
+});
+
+// ────────────────
+// 拖拉排序邏輯（保持原有）
 // ────────────────
 let draggedItem = null;
 
@@ -99,7 +153,6 @@ function addDragAndDropListeners() {
   const items = taskList.querySelectorAll('li');
 
   items.forEach(item => {
-    // 滑鼠
     item.addEventListener('dragstart', () => {
       draggedItem = item;
       setTimeout(() => item.classList.add('dragging'), 0);
@@ -124,7 +177,6 @@ function addDragAndDropListeners() {
       if (after) after.classList.add('over');
     });
 
-    // 觸控（手機）
     item.addEventListener('touchstart', () => {
       draggedItem = item;
       item.classList.add('dragging');
@@ -173,7 +225,7 @@ function saveOrder() {
   saveAndRender();
 }
 
-// 事件
+// 事件綁定
 addBtn.addEventListener('click', addTask);
 taskInput.addEventListener('keypress', e => {
   if (e.key === 'Enter') addTask();
