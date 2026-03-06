@@ -26,10 +26,16 @@
       <button id="addBtn">新增</button>
     </div>
 
+    <div class="backup-controls">
+      <button id="exportBtn">匯出為檔案</button>
+      <button id="importBtn">從檔案匯入</button>
+      <input type="file" id="fileInput" accept=".json" style="display:none;">
+    </div>
+
     <ul id="taskList"></ul>
 
     <div class="footer">
-      <small>資料儲存於瀏覽器 • 清除瀏覽器資料會消失</small>
+      <small>資料儲存於瀏覽器 • 匯出/匯入功能可用於備份或轉移裝置</small>
     </div>
   </div>
 
