@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Todo List</title>
+  <title>我的待辦事項</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,17 +11,25 @@
 </head>
 <body>
   <div class="container">
-    <h1>Today's Tasks <span id="date"></span></h1>
+    <h1>今日待辦 <span id="date"></span></h1>
     
     <div class="input-area">
-      <input type="text" id="taskInput" placeholder="Add a new task..." autocomplete="off">
-      <button id="addBtn">Add</button>
+      <input type="text" id="taskInput" placeholder="輸入任務..." autocomplete="off">
+      
+      <select id="categorySelect">
+        <option value="個人">個人</option>
+        <option value="工作">工作</option>
+      </select>
+      
+      <input type="date" id="dueDateInput">
+      
+      <button id="addBtn">新增</button>
     </div>
 
     <ul id="taskList"></ul>
 
     <div class="footer">
-      <small>Saved in your browser • Clearing browser data will delete tasks</small>
+      <small>資料儲存於瀏覽器 • 清除瀏覽器資料會消失</small>
     </div>
   </div>
 
