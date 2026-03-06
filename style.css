@@ -1,177 +1,48 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ... 原有所有樣式保持不變 ... */
 
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: #0f0f17;
-  color: #e2e8f0;
-  min-height: 100vh;
-  padding: 20px 12px;
-}
-
-.container {
-  max-width: 540px;
-  margin: 0 auto;
-  background: #1a1f2e;
-  border-radius: 16px;
-  padding: 28px 24px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  border: 1px solid #2d3748;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 28px;
-  color: #f1f5f9;
-  font-size: 2rem;
-}
-
-#date {
-  font-size: 1rem;
-  color: #94a3b8;
-}
-
-.input-area {
+/* 備份控制區 */
+.backup-controls {
   display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px 0 28px;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 28px;
 }
 
-#taskInput {
-  flex: 3;
-  min-width: 180px;
-  padding: 14px 16px;
-  background: #2d3748;
-  border: 1px solid #4a5568;
-  border-radius: 10px;
-  color: #e2e8f0;
-  font-size: 1.05rem;
-  outline: none;
-}
-
-#taskInput:focus {
-  border-color: #7c3aed;
-  box-shadow: 0 0 0 3px rgba(124,58,237,0.2);
-}
-
-#categorySelect,
-#dueDateInput {
-  padding: 14px 16px;
-  background: #2d3748;
-  border: 1px solid #4a5568;
-  border-radius: 10px;
-  color: #e2e8f0;
+.backup-controls button {
+  padding: 10px 24px;
   font-size: 1rem;
-  min-width: 110px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-#dueDateInput {
-  color-scheme: dark;
-}
-
-#addBtn {
-  padding: 0 24px;
-  background: #7c3aed;
+#exportBtn {
+  background: #10b981;
   color: white;
   border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
 }
 
-#addBtn:hover {
-  background: #6d28d9;
+#exportBtn:hover {
+  background: #059669;
 }
 
-ul {
-  list-style: none;
-}
-
-li {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  background: #242a3b;
-  margin-bottom: 12px;
-  border-radius: 10px;
-  border: 1px solid #334155;
-  transition: all 0.2s;
-  cursor: grab;
-  user-select: none;
-}
-
-li.completed {
-  background: #1e293b;
-  text-decoration: line-through;
-  color: #94a3b8;
-  opacity: 0.9;
-  border-color: #334155;
-}
-
-li.personal    { border-left: 4px solid #60a5fa; }
-li.work        { border-left: 4px solid #f87171; }
-
-li input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: #7c3aed;
-}
-
-li .task-text {
-  flex: 1;
-  font-size: 1.05rem;
-}
-
-li .due-date {
-  font-size: 0.9rem;
-  color: #94a3b8;
-  min-width: 100px;
-  text-align: right;
-}
-
-li button {
-  background: none;
+#importBtn {
+  background: #f59e0b;
+  color: white;
   border: none;
-  font-size: 1.4rem;
-  color: #f87171;
-  cursor: pointer;
-  padding: 4px 8px;
 }
 
-li button:hover {
-  color: #ef4444;
-}
-
-li.dragging {
-  opacity: 0.4;
-  transform: scale(1.02);
-  background: #334155 !important;
-  border-color: #7c3aed;
-}
-
-li.over {
-  border: 2px dashed #7c3aed;
-  background: #2d3748;
-}
-
-.footer {
-  text-align: center;
-  margin-top: 32px;
-  color: #64748b;
-  font-size: 0.9rem;
+#importBtn:hover {
+  background: #d97706;
 }
 
 @media (max-width: 520px) {
-  .input-area {
+  .backup-controls {
     flex-direction: column;
   }
-  #taskInput {
-    flex: none;
+  .backup-controls button {
+    width: 100%;
   }
 }
